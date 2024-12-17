@@ -27,7 +27,4 @@ plt.show()
 # Normalize the data
 X = X / 255.0 
 
-# To reshape
-X = X.values.reshape(-1, 28, 28, 1) # -1 is the number of samples (372451), 28x28 is the size of the image, 1 is the number of channels (grayscale)
-
 #================================================================================================
