@@ -1,3 +1,5 @@
 A_Z Handwritten Data.csv
 .vscode/
 .vs/
+best_model.keras
+best_model.h5
