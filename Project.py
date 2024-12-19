@@ -121,7 +121,7 @@ def calc_accuracy(x, y, theta):
 def logistic_regression(x_train, y_train, x_validate, y_validate, num_classes, alpha=0.001, iterations=2000):
     print("\n\n-----------------Logistic Regression-----------------")
     m, n = x_train.shape
-    x_train_bias = np.c_[np.ones((m, 1)), x_train]
+    x_train_bias    = np.c_[np.ones((m, 1)), x_train]
     x_validate_bias = np.c_[np.ones((x_validate.shape[0], 1)), x_validate]
     models = np.zeros((num_classes, n + 1))
     training_errors = []
@@ -183,7 +183,7 @@ def NN_1(x_train, x_validate, y_train, y_validate):
     model.fit(x_train, y_train, epochs=5, validation_data=(x_validate, y_validate))
 
     # plot the error and accuracy curves for the training data and validation datasets.
-    plot_data(model)
+    plot_data(model.history.history["loss"], model.history.history["val_loss"], model.history.history["accuracy"], model.history.history["val_accuracy"])
     return model
 
 
