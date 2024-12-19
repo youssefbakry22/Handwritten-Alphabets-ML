@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
+from sklearn.metrics import confusion_matrix, f1_score
 from sklearn.utils import shuffle
 import tensorflow as tf
 
@@ -17,7 +17,7 @@ print(data_set.describe())
 data_shuffled = shuffle(data_set)
 number_of_classes = 26
 
-#================================================================================================
+# ================================================================================================
 
 def display_image_grid(flattened_vectors, image_size=(28, 28), grid_size=(3, 3)):
     # Create a figure with a grid of subplots
@@ -68,24 +68,21 @@ def data_exploration():
 
     return x_data, y_data
 
+# ================================================================================================
 
 def SVM_Linear(x_train, x_test, y_train, y_test):
-    print("-----------------SVM Linear-----------------")
+    print("\n\n-----------------SVM Linear-----------------")
     # Create the model
     model = SVC(kernel="linear")
-
+    
     # Train the model
     model.fit(x_train, y_train)
-
+    
     # Predict
     y_pred = model.predict(x_test)
-
+    
     # Evaluate
-    accuracy = accuracy_score(y_test, y_pred)
-    print(f"Accuracy: {accuracy}")
-    print(classification_report(y_test, y_pred))
-    print(confusion_matrix(y_test, y_pred))
-    print(f1_score(y_test, y_pred, average="weighted"))
+    evaluate_model(y_test, y_pred)
 
 
 def SVM_NonLinear(x_train, x_test, y_train, y_test):
@@ -100,12 +97,9 @@ def SVM_NonLinear(x_train, x_test, y_train, y_test):
     y_pred = model.predict(x_test)
 
     # Evaluate
-    accuracy = accuracy_score(y_test, y_pred)
-    print(f"Accuracy: {accuracy}")
-    print(classification_report(y_test, y_pred))
-    print(confusion_matrix(y_test, y_pred))
-    print(f1_score(y_test, y_pred, average="weighted"))
+    evaluate_model(y_test, y_pred)
 
+# ================================================================================================
 
 # Sigmoid function
 def calc_sigmoid(z):
@@ -165,13 +159,13 @@ def logistic_regression(x_train, y_train, x_validate, y_validate, num_classes, a
 
     return models
 
-
 # Prediction for One-vs-All
 def predict(x_test, models):
     x_test_bias   = np.c_[np.ones((x_test.shape[0], 1)), x_test]
     probabilities = calc_sigmoid(x_test_bias @ models.T)
     return np.argmax(probabilities, axis=1)  # Class with the highest probability
 
+# ================================================================================================
 
 def NN_1(x_train, x_validate, y_train, y_validate):
     print("\n\n-----------------Neural Network 1-----------------")
@@ -258,7 +252,7 @@ def test_best_model(best_model, x_test, y_test):
 
     evaluate_model(y_test, y_pred)
 
-#================================================================================================
+# ================================================================================================
 
 if __name__ == "__main__":
     x_data, y_data = data_exploration()
