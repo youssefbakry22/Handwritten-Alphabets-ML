@@ -118,7 +118,7 @@ def calc_accuracy(x, y, theta):
     return np.mean(predictions == y)  # Compare predictions with true labels
 
 # Logistic regression with error and accuracy tracking
-def logistic_regression(x_train, y_train, x_validate, y_validate, num_classes, alpha=0.001, iterations=2000):
+def logistic_regression(x_train, y_train, x_validate, y_validate, num_classes, alpha=0.1, iterations=5000):
     print("\n\n-----------------Logistic Regression-----------------")
     m, n = x_train.shape
     x_train_bias    = np.c_[np.ones((m, 1)), x_train]
