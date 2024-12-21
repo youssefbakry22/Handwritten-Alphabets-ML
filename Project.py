@@ -159,8 +159,7 @@ def logistic_regression(x_train, y_train, x_validate, y_validate, num_classes, a
         # Training with error and accuracy tracking
         for j in range(iterations):
             y_pred   = calc_sigmoid(x_train_bias @ theta)
-            gradient = (1 / m) * (x_train_bias.T @ (y_pred - y_bin))
-            theta   -= alpha * gradient
+            theta   -= alpha * (1 / m) * (x_train_bias.T @ (y_pred - y_bin))
             y_validate_bin = np.where(y_validate == i, 1, 0)
             
             # Track errors and accuracies
