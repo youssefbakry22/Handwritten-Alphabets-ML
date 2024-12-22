@@ -10,7 +10,7 @@ import tensorflow as tf
 import cv2
 
 # alphabet dictionary for the labels
-alpabet_dict = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H", 8: "I", 9: "J", 10: "K", 11: "L", 12: "M", 13: "N", 14: "O", 15: "P", 16: "Q", 17: "R", 18: "S", 19: "T", 20: "U", 21: "V", 22: "W", 23: "X", 24: "Y", 25: "Z" }
+alphabet_dict = {0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H", 8: "I", 9: "J", 10: "K", 11: "L", 12: "M", 13: "N", 14: "O", 15: "P", 16: "Q", 17: "R", 18: "S", 19: "T", 20: "U", 21: "V", 22: "W", 23: "X", 24: "Y", 25: "Z" }
 
 # Load dataset
 data_set = pd.read_csv('A_Z Handwritten Data.csv', header=None)
@@ -75,6 +75,13 @@ def read_image(path):
         char_image = binary_image[y_margin : y_margin+h_margin, x_margin : x_margin+w_margin]
         chars.append(char_image)
 
+    # display each image in the list
+    for i, char in enumerate(chars):
+        plt.subplot(1, len(chars), i+1)
+        plt.imshow(char, cmap="gray")
+        plt.axis("off")
+    plt.show()
+    
     return chars
 
 def predict_chars(model, chars):
@@ -87,8 +94,8 @@ def predict_chars(model, chars):
         # Predict the class
         prediction = model.predict(char_image)
         label = np.argmax(prediction)
-        predicted_chars.append(alpabet_dict[label])
-    
+        predicted_chars.append(alphabet_dict[label])
+
     return predicted_chars
 
 # ================================================================================================
