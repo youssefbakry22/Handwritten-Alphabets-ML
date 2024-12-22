@@ -46,20 +46,41 @@ def data_exploration():
     # Normalize the data
     x_data = x_data / 255.0
 
+    display_image_grid(x_data.values, grid_size=(6, 6))
+
     return x_data, y_data
+
+
+def display_image_grid(flattened_vectors, image_size=(28, 28), grid_size=(3, 3)):
+    # Create a figure with a grid of subplots
+    plt.subplots(grid_size[0], grid_size[1], figsize=(8, 8))
+
+    # Plot images
+    for i in range(grid_size[0] * grid_size[1]):
+        if i < len(flattened_vectors):
+            plt.subplot(grid_size[0], grid_size[1], i + 1)
+            plt.imshow(flattened_vectors[i].reshape(image_size), cmap="Greys")
+            plt.axis("off")
+        else:
+            plt.axis("off")
+
+    # Adjust layout
+    plt.tight_layout()
+    plt.show()
+
 
 def read_image(path):
     print("\n\n-----------------Reading Image-----------------")
     # Read the image
     image = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-    
+
     # Preprocess the image
     _ , binary_image = cv2.threshold(image, 128, 255, cv2.THRESH_BINARY_INV) # Convert the image to binary
     contours, _ = cv2.findContours(binary_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE) # The boundaries of the objects in the image
-    
+
     # Sort contours(bounding rectangles) from left to right based on boundingRect[0] (x-coordinate)
     sorted_contours = sorted(contours, key=lambda countour: cv2.boundingRect(countour)[0])
-    
+
     # split the image into characters
     chars = []
     for contour in sorted_contours:
@@ -81,7 +102,7 @@ def read_image(path):
         plt.imshow(char, cmap="gray")
         plt.axis("off")
     plt.show()
-    
+
     return chars
 
 def predict_chars(model, chars):
